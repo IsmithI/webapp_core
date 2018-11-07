@@ -1,0 +1,33 @@
+{
+	"app": {
+		"name": "DB test"
+	},
+	"router": {
+		"api": [
+
+		],
+		"web": {
+			"Main": [
+				{ "path": "/", "name": "auth" },
+				{ "path": "/" }
+			],
+			"Users": [
+				{ "path": "/users" },
+				{ "path": "/users/[i:id]", "name": "get" }
+			],
+			"NotFound": [
+				{ "path": "/404" }
+			]
+		}
+	},
+	"db": {
+		"database_type": "mysql",
+		"database_name": "crm",
+		"server": "localhost",
+		"username": "root",
+		"password": "qwer1234"
+	},
+	"models": {
+		"Users": { "format": true }
+	}
+}
