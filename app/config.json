@@ -22,7 +22,7 @@
 	},
 	"db": {
 		"database_type": "mysql",
-		"database_name": "crm",
+		"database_name": "upoli",
 		"server": "localhost",
 		"username": "root",
 		"password": "qwer1234"

@@ -4,16 +4,12 @@ namespace app\controller;
 
 class Main {
 
-	static function index() {
-		return "Hello";
+	static function index($req, $res, $service, $app) {
+		return "Hello, ".$service->startSession();
 	}
 
-	static function auth($req, $res) {
-		$superSecretHash = '1234';
-		if ($req->hash != $superSecretHash) {
-			$res->body('Not authorized!');
-			return $res->send();
-		} 
+	static function auth($req, $res, $service, $app) {
+		return Authentication::auth($req, $res, $service, $app);
 	}
 
 }
