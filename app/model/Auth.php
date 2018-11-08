@@ -8,7 +8,7 @@ use \app\model\Users;
 class Auth extends Model {
 
 
-	public static function get(string $session_id) {
+	public static function get(string $session_id): Users {
 		$db = DB::getInstance();
 
 		$session = $db->get("sessions", [

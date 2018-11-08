@@ -4,6 +4,7 @@ namespace app;
 
 use \app\ConfigReader;
 use \app\loader\ControllerLoader;
+use \app\model\Auth;
 
 class App {
 
@@ -31,6 +32,11 @@ class App {
 				$config = ConfigReader::read();
 				$loader = new \Twig_Loader_Filesystem($config["views"]["templates_dir"]);
 				return new \Twig_Environment($loader);
+			});
+
+			$app->register('user', function () use ($service) {
+				$user = Auth::get($service->startSession());
+				return $user;
 			});
 		});
 

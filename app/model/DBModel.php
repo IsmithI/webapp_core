@@ -20,9 +20,10 @@ class DBModel extends Model {
 		
 		$rawData = $db->select(self::table(), ['id[Int]', 'deleted[Bool]', 'attributes[JSON]'], $params);
 		
+		$className = \get_called_class();
 		$models = new Collection();
 		foreach ($rawData as $data) {
-			$model = new DBModel();
+			$model = new $className();
 			$model->id = $data["id"];
 			$model->deleted = $data["deleted"];
 
@@ -40,7 +41,8 @@ class DBModel extends Model {
 		$rawData = $db->get(self::table(), ['id[Int]', 'deleted[Bool]', 'attributes[JSON]'], $params);
 		if (!$rawData) return false;
 
-		$model = new DBModel([
+		$className = \get_called_class();		
+		$model = new $className([
 			"id" => $rawData["id"],
 			"deleted" => $rawData["deleted"]
 		]);
