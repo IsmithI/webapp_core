@@ -14,7 +14,8 @@ class Auth extends Model {
 		$session = $db->get("sessions", [
 			"user_id[Int]"
 		], [
-			"session_id" => $session_id
+			"session_id" => $session_id,
+			"end_date" => null
 		]);
 		if (!$session) return false;
 		
