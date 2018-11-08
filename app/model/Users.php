@@ -4,7 +4,7 @@ namespace app\model;
 
 class Users extends DBModel {
 
-	public function nonAttributes() {
-		return ['id', 'role'];
+	public static function nonAttributes() {
+		return ['id', 'deleted', 'role'];
 	}
 }

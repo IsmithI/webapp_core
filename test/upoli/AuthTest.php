@@ -2,6 +2,7 @@
 
 use \PHPUnit\Framework\TestCase;
 use \app\model\Auth;
+use \app\model\DBModel;
 
 class AuthTest extends TestCase {
 
@@ -12,6 +13,8 @@ class AuthTest extends TestCase {
 		$this->assertTrue(!Auth::get(""));
 
 		// Return data for known session
-		$this->assert(Auth::get("1234"));
+		$model = Auth::get("1234");		
+		$this->assertInstanceOf(DBModel::class, $model);
+		$this->assertEquals("Oleg", $model->first_name);
 	}
 }
