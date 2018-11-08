@@ -25,6 +25,15 @@ class App {
 
 	private function defineRoutes() {
 		$controllerLoader = new ControllerLoader();
+
+		$this->router->respond( function ($req, $res, $service, $app) {
+			$app->register('twig', function () {
+				$config = ConfigReader::read();
+				$loader = new \Twig_Loader_Filesystem($config["views"]["templates_dir"]);
+				return new \Twig_Environment($loader);
+			});
+		});
+
 		$controllerLoader->load( function ($route) {
 			$this->router->respond(...$route);
 		});
