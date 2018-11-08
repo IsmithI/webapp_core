@@ -13,7 +13,7 @@ class AuthTest extends TestCase {
 		$this->assertTrue(!Auth::get(""));
 
 		// Return data for known session
-		$model = Auth::get("1234");		
+		$model = Auth::get("7gfrc6ke3hlmjapg60tm1fq3de");		
 		$this->assertInstanceOf(DBModel::class, $model);
 		$this->assertEquals("Oleg", $model->first_name);
 	}

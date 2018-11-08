@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use \app\model\Model;
+use \app\model\Auth;
 use \app\controller\response\NotAuthenticated;
 
 class Authentication {
@@ -24,7 +25,7 @@ class Authentication {
 	public static function auth($req, $res, $service, $app) {
 		$session = $service->startSession();
 		
-		if (!$session)
+		if (!$user = Auth::get($session))
 			return (new NotAuthenticated($res))->send();
 	}
 }
