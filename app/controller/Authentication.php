@@ -25,7 +25,10 @@ class Authentication {
 	public static function auth($req, $res, $service, $app) {
 		$session = $service->startSession();
 		
-		if (!$user = Auth::get($session))
-			return (new NotAuthenticated($res))->send();
+		if (!$user = Auth::get($session)) {
+			$res->body($app->twig->render('not_authenticated.html'));
+			return $res->send();
+		}
+			// return (new NotAuthenticated($res))->send();
 	}
 }
