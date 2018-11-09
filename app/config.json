@@ -29,5 +29,11 @@
 	},
 	"models": {
 		"Users": { "format": true }
+	},
+	"views": {
+		"templates_dir": "app/view/templates"
+	},
+	"components": {
+		"directory": "app/components"
 	}
 }

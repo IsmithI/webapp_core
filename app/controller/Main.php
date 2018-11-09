@@ -2,18 +2,14 @@
 
 namespace app\controller;
 
-class Main {
+<<<<<<< HEAD
+class Main implements Controller {
+=======
+class Main extends SecuredController {
+>>>>>>> upoli
 
-	static function index() {
-		return "Hello";
-	}
-
-	static function auth($req, $res) {
-		$superSecretHash = '1234';
-		if ($req->hash != $superSecretHash) {
-			$res->body('Not authorized!');
-			return $res->send();
-		} 
+	static function index($req, $res, $service, $app) {
+		return $app->twig->render("index.html", ["user" => $app->user]);
 	}
 
 }
