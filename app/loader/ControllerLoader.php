@@ -4,8 +4,14 @@ namespace app\loader;
 
 class ControllerLoader implements Loader {
 
+	private $config;
+
+	public function __construct() {
+		$this->config = \app\ConfigReader::read();
+	}
+
 	public function load( $callback ) {
-		$routes = \app\ConfigReader::read()["router"];
+		$routes = $this->config["router"];
 
 		foreach ($routes["web"] as $controller => $routes) {
 			$controller = \class_exists("\app\controller\\".$controller) ?

@@ -4,6 +4,7 @@ namespace app;
 
 use \app\ConfigReader;
 use \app\loader\ControllerLoader;
+use \app\loader\ComponentsLoader;
 use \app\model\Auth;
 
 class App {
@@ -28,6 +29,11 @@ class App {
 		$controllerLoader = new ControllerLoader();
 
 		$this->router->respond( function ($req, $res, $service, $app) {
+			$componentsLoader = new ComponentsLoader();
+			$componentsLoader->load( function ($component) use ($app) {
+				$app->register( $component->name, $component->handler );
+			});
+
 			$app->register('twig', function () {
 				$config = ConfigReader::read();
 				$loader = new \Twig_Loader_Filesystem($config["views"]["templates_dir"]);

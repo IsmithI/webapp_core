@@ -32,5 +32,8 @@
 	},
 	"views": {
 		"templates_dir": "app/view/templates"
+	},
+	"components": {
+		"directory": "app/components"
 	}
 }
