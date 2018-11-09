@@ -30,19 +30,11 @@ class App {
 
 		$this->router->respond( function ($req, $res, $service, $app) {
 			$componentsLoader = new ComponentsLoader();
-			$componentsLoader->load( function ($component) use ($app) {
-				$app->register( $component->name, $component->handler );
-			});
-
-			$app->register('twig', function () {
-				$config = ConfigReader::read();
-				$loader = new \Twig_Loader_Filesystem($config["views"]["templates_dir"]);
-				return new \Twig_Environment($loader);
-			});
-
-			$app->register('user', function () use ($service) {
-				$user = Auth::get($service->startSession());
-				return $user;
+			$componentsLoader->load( function ($component) use ($req, $res, $service, $app) {
+				
+				$app->register( $component->name, function () use ($component, $req, $res, $service, $app) {
+					return ($component->handler)($req, $res, $service, $app);
+				});
 			});
 		});
 
