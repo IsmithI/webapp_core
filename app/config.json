@@ -7,6 +7,9 @@
 
 		],
 		"web": {
+			"Login": [
+				{ "path": "/login" }
+			],
 			"Main": [
 				{ "path": "/", "name": "auth" },
 				{ "path": "/" }

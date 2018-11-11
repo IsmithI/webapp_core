@@ -4,7 +4,7 @@ namespace app\controller\response;
 
 class LoginFailed extends AbstractResponse {
 
-	protected function getResonseMessage() {
+	protected function getResponseMessage() {
 		return [
 			"success" => false,
 			"message" => "Authentication failed!"
