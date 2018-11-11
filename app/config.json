@@ -3,20 +3,27 @@
 		"name": "DB test"
 	},
 	"router": {
-		"api": [
-
-		],
+		"api": [],
 		"web": {
 			"Main": [
-				{ "path": "/", "name": "auth" },
-				{ "path": "/" }
+				{
+					"path": "/?",
+					"middleware": ["Auth", "Broken"]
+				}
 			],
 			"Users": [
-				{ "path": "/users" },
-				{ "path": "/users/[i:id]", "name": "get" }
+				{
+					"path": "/users"
+				},
+				{
+					"path": "/users/[i:id]",
+					"name": "get"
+				}
 			],
 			"NotFound": [
-				{ "path": "/404" }
+				{
+					"path": "/404"
+				}
 			]
 		}
 	},
@@ -28,7 +35,9 @@
 		"password": "qwer1234"
 	},
 	"models": {
-		"Users": { "format": true }
+		"Users": {
+			"format": true
+		}
 	},
 	"views": {
 		"templates_dir": "app/view/templates"

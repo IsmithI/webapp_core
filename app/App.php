@@ -38,8 +38,27 @@ class App {
 			});
 		});
 
-		$controllerLoader->load( function ($route) {
-			$this->router->respond(...$route);
+		$controllerLoader->load( function ($controller) {
+			if ($controller->has("middleware"))
+				foreach ($controller->middleware as $middleware) {
+					
+					$handler = new $middleware();
+					$this->router->respond(function ($req, $res, $service, $app) use ($handler) {
+						return $handler->handle($req, $res, $service, $app);
+					});
+				}
+			
+			if ($controller->has("method"))
+				$this->router->respond(
+					$controller->method,
+					$controller->path,
+					$controller->name
+				);
+			else
+				$this->router->respond(
+					$controller->path,
+					$controller->name
+				);
 		});
 
 		$this->router->onHttpError( '\app\HttpErrorHandler::handle' );
