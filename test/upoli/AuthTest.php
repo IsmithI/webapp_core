@@ -4,9 +4,9 @@ use \PHPUnit\Framework\TestCase;
 use \app\model\Auth;
 use \app\model\DBModel;
 
-class AuthTest extends TestCase {
+class AuthTest {
 
-	/** @test */
+	
 	public function check_that_we_can_search_db_for_session() {
 		
 		// Return false for empty session

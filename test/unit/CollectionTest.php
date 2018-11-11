@@ -112,4 +112,23 @@ class CollectionTest extends TestCase {
 		],  $collection->get());
 	}
 
+	/** @test */
+	public function check_collection_can_be_filtered() {
+		$collection = new \app\collection\Collection([
+			['username' => 'Alex', 'age' => 20],
+			['username' => 'Owen', 'age' => 22],
+			['username' => 'Billy', 'age' => 43],
+			['username' => 'Freddy', 'age' => 14]
+		]);
+
+		$this->assertEquals(
+			[
+				['username' => 'Alex', 'age' => 20],
+				['username' => 'Owen', 'age' => 22]
+			], 
+			$collection->filter( function ($user) {
+				return $user["age"] > 16 && $user["age"] < 30;
+			})->get()
+		);
+	}
 }

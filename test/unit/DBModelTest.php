@@ -9,6 +9,22 @@ use \app\utils\DB;
 class DBModelTest extends TestCase {
 
 	/** @test */
+	public function check_that_we_can_filter_db_records() {
+		$models = DBModel::all(["first_name" => "Oleg"]);
+
+		// $params = ["first_name" => "Oleg"];
+		// $models = $models->filter( function ($model) use ($params) {
+			
+		// 	foreach ($params as $key => $value) {
+		// 		return $model->has($key) && $model->$key == $value;
+		// 	}
+		// });
+
+		foreach ($models as $model) $this->assertEquals("Oleg", $model->first_name);
+		$this->assertTrue($models->count() == 2);
+	}
+
+	/** @test */
 	public function db_model_returns_table_name_based_on_its_class_name() {
 		$this->assertEquals(DBModel::table(), "dbmodel");
 	}
@@ -35,6 +51,7 @@ class DBModelTest extends TestCase {
 		$model->save();
 
 		$model = DBModel::one(['id' => $model->id]);
+		$this->assertNotFalse($model);
 		$this->assertEquals($model->first_name, "Changed");
 
 		$model->delete();
