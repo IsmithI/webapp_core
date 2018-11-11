@@ -15,6 +15,10 @@ class Model {
 	public function __get(string $name) {
 		return $this->$name;
 	}
+
+	public function has(string $name) {
+		return isset($this->$name);
+	}
 	
 	public function toJson() {
 		return json_encode(get_object_vars($this));
