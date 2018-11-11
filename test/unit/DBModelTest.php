@@ -10,15 +10,12 @@ class DBModelTest extends TestCase {
 
 	/** @test */
 	public function check_that_we_can_filter_db_records() {
-		$models = DBModel::all(["first_name" => "Oleg"]);
 
-		// $params = ["first_name" => "Oleg"];
-		// $models = $models->filter( function ($model) use ($params) {
-			
-		// 	foreach ($params as $key => $value) {
-		// 		return $model->has($key) && $model->$key == $value;
-		// 	}
-		// });
+		$firstNameIsOleg = function ($model) {
+			return $model->first_name == "Oleg";
+		};
+
+		$models = DBModel::all()->filter($firstNameIsOleg);
 
 		foreach ($models as $model) $this->assertEquals("Oleg", $model->first_name);
 		$this->assertTrue($models->count() == 2);

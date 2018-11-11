@@ -13,7 +13,7 @@ class Model {
 	}
 
 	public function __get(string $name) {
-		return $this->$name;
+		return $this->has($name) ? $this->name : null;
 	}
 
 	public function has(string $name) {

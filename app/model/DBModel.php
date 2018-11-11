@@ -36,13 +36,6 @@ class DBModel extends Model {
 			$models->push($model);
 		}
 
-		$models = $models->filter( function ($model) use ($params) {
-			
-			foreach ($params as $key => $value) {
-				return $model->has($key) && $model->$key == $value;
-			}
-		});
-
 		return $models;
 	}
 
