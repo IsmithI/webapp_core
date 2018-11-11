@@ -22,13 +22,4 @@ class Auth extends Model {
 		$user = Users::one(['id' => $session["user_id"]]);
 		return $user;
 	}
-
-	public static function authenticateUser(Users $user, string $session_id) {
-		$db = DB::getInstance();
-
-		$db->insert("sessions", [
-			"user_id" => $user->id,
-			"session_id" => $session_id,
-		]);
-	}
 }

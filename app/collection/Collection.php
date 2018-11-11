@@ -42,10 +42,12 @@ class Collection implements \IteratorAggregate {
 		usort($this->items, $comparator);
 	}
 
-	public function search($value) {
-		foreach ($this->items as $item)
-			if ($item == $value) return $item;
+	public function filter(\Closure $comparator) {
+		$filtered = [];
+		foreach ($this->items as $item) {
+			if ($comparator($item)) $filtered[] = $item;
+		}
 
-		return false;
+		return new Collection($filtered);
 	}
 }

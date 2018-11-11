@@ -2,6 +2,8 @@
 
 namespace app\loader;
 
+use \app\model\Model;
+
 class ControllerLoader implements Loader {
 
 	private $config;
@@ -20,15 +22,24 @@ class ControllerLoader implements Loader {
 							false;
 
 			if ($controller) {
-				foreach ($routes as $route) {
-					$routeArray = [];					
-					if (array_key_exists("method", $route)) {
-						array_push($routeArray, $route["method"]);
+				foreach ($routes as $route) {					
+					$controllerModel = new Model();
+
+					if (array_key_exists("method", $route))
+						$controllerModel->method = $route["method"];
+
+					$controllerModel->path = $route["path"];
+					$controllerModel->name = array_key_exists("name", $route) ? "$controller::".$route["name"] : "$controller::"."index"; 
+
+					if (array_key_exists("middleware", $route)) {
+						$controllerModel->middleware = [];
+
+						foreach($route["middleware"] as $middleware)
+							if (\class_exists("app\\middleware\\$middleware"))
+								$controllerModel->middleware[] = "app\\middleware\\$middleware";
 					}
-					array_push($routeArray, $route["path"]);
-					array_push($routeArray, array_key_exists("name", $route) ? "$controller::".$route["name"] : "$controller::"."index");
 	
-					$callback($routeArray);
+					$callback($controllerModel);
 				}
 			}
 		}

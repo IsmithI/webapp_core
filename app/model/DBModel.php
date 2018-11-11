@@ -18,7 +18,11 @@ class DBModel extends Model {
 	public static function all(array $params = []) {
 		$db = DB::getInstance();
 		
-		$rawData = $db->select(self::table(), ['id[Int]', 'deleted[Bool]', 'attributes[JSON]'], $params);
+		$searchParams = [];
+		foreach (self::nonAttributes() as $value)
+			if (array_key_exists($value, $params)) $searchParams[] = $params[$value];
+
+		$rawData = $db->select(self::table(), ['id[Int]', 'deleted[Bool]', 'attributes[JSON]'], $searchParams);
 		
 		$className = \get_called_class();
 		$models = new Collection();
