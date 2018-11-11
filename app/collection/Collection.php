@@ -41,4 +41,13 @@ class Collection implements \IteratorAggregate {
 	public function sort(\Closure $comparator) {
 		usort($this->items, $comparator);
 	}
+
+	public function filter(\Closure $comparator) {
+		$filtered = [];
+		foreach ($this->items as $item) {
+			if ($comparator($item)) $filtered[] = $item;
+		}
+
+		return new Collection($filtered);
+	}
 }
