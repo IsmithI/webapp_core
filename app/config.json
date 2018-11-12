@@ -10,17 +10,18 @@
 			],
 			"Main": [
 				{
-					"path": "/?",
-					"middleware": ["Auth", "Broken"]
+					"path": "/?"
 				}
 			],
 			"Users": [
 				{
-					"path": "/users"
+					"path": "/users",
+					"middleware": ["Auth"]
 				},
 				{
 					"path": "/users/[i:id]",
-					"name": "get"
+					"name": "get",
+					"middleware": ["Auth"]
 				}
 			],
 			"NotFound": [
