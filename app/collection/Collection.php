@@ -10,7 +10,14 @@ class Collection implements \IteratorAggregate {
 		$this->items = $items;
 	}
 
-	public function get() {
+	public function get($key = null) {
+		
+		if (!is_null($key))
+			if (array_key_exists($key, $this->items))
+				return $this->items[$key];
+			else
+				return null;
+
 		return $this->items;
 	}
 
