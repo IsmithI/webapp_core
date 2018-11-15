@@ -43,9 +43,32 @@ class App {
 				foreach ($controller->middleware as $middleware) {
 					
 					$handler = new $middleware();
-					$this->router->respond(function ($req, $res, $service, $app) use ($handler) {
-						return $handler->handle($req, $res, $service, $app);
-					});
+
+					if ($controller->has("method"))
+						$this->router->respond(
+							$controller->method,
+							$controller->path,
+							function ($req, $res, $service, $app) use ($handler) {
+								$result = $handler->handle($req, $res, $service, $app);
+								
+								if ($result) {
+									$result->send();
+									die();
+								}
+							}
+						);
+					else
+						$this->router->respond(
+							$controller->path,
+							function ($req, $res, $service, $app) use ($handler) {
+								$result = $handler->handle($req, $res, $service, $app);
+								
+								if ($result) {
+									$result->send();
+									die();
+								}
+							}
+						);
 				}
 			
 			if ($controller->has("method"))

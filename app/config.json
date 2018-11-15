@@ -5,19 +5,42 @@
 	"router": {
 		"api": [],
 		"web": {
+			"Login": [
+				{
+					"path": "/login",
+					"name": "index"
+				},
+				{
+					"path": "/logout",
+					"name": "logout"
+				},
+				{
+					"path": "/register",
+					"name": "register"
+				}
+			],
 			"Main": [
 				{
-					"path": "/?",
-					"middleware": ["Auth", "Broken"]
+					"path": "/?"
 				}
 			],
 			"Users": [
 				{
-					"path": "/users"
+					"path": "/user",
+					"name": "getCurrent"
+				},
+				{
+					"path": "/users",
+					"middleware": [
+						"Auth"
+					]
 				},
 				{
 					"path": "/users/[i:id]",
-					"name": "get"
+					"name": "get",
+					"middleware": [
+						"Auth"
+					]
 				}
 			],
 			"NotFound": [
@@ -29,7 +52,7 @@
 	},
 	"db": {
 		"database_type": "mysql",
-		"database_name": "crm",
+		"database_name": "upoli",
 		"server": "localhost",
 		"username": "root",
 		"password": "qwer1234"
