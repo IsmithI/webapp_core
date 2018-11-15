@@ -9,6 +9,10 @@ use \app\controller\response\LoggedOut;
 
 class Login {
 
+    static function get_index($req, $res, $service, $app) {
+        return $app->twig->render("login.html");
+    }
+
 	static function index($req, $res, $service, $app) {
 		$user = $app->user;
 

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    {% include "partials/header.html" %}
+
+    <link rel="stylesheet" href="/public/css/login.css">
+</head>
+<body>
+
+<div style="margin-top: 5rem">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mr-auto ml-auto">
+                <div class="card">
+                    <h1>UPoli</h1>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="text-secondary">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid amet assumenda cum
+                                dolore iure laboriosam laborum, maxime qui, quibusdam rerum tempora vero voluptatibus
+                                voluptatum! Eius et obcaecati reprehenderit sit? Excepturi!
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            {% include "partials/loginForm.html" %}
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

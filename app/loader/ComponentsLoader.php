@@ -8,7 +8,9 @@ class ComponentsLoader implements Loader {
 
 	public function __construct() {
 		$this->config = \app\ConfigReader::read();
-	}
+
+
+    }
 
 	function load( $callback ) {
 		$componentsDir = $this->config["components"]["directory"];

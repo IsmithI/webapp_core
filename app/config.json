@@ -8,7 +8,13 @@
 			"Login": [
 				{
 					"path": "/login",
+					"method": "POST",
 					"name": "index"
+				},
+				{
+					"path": "/login",
+					"method": "GET",
+					"name": "get_index"
 				},
 				{
 					"path": "/logout",
