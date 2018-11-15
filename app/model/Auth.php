@@ -22,4 +22,18 @@ class Auth extends Model {
 		$user = Users::one(['id' => $session["user_id"]]);
 		return $user;
 	}
+
+	public static function authenticateUser($user, $session_id) {
+		$db = DB::getInstance();
+
+		$db->insert("sessions", [
+			"user_id" => $user->id,
+			"session_id" => $session_id
+		]);
+	}
+
+	public static function invalidateSession($session_id) {
+		$db = DB::getInstance();
+		$db->delete("sessions", ["session_id" => $session_id]);
+	}
 }

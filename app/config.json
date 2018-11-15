@@ -6,7 +6,18 @@
 		"api": [],
 		"web": {
 			"Login": [
-				{ "path": "/login" }
+				{
+					"path": "/login",
+					"name": "index"
+				},
+				{
+					"path": "/logout",
+					"name": "logout"
+				},
+				{
+					"path": "/register",
+					"name": "register"
+				}
 			],
 			"Main": [
 				{
@@ -15,13 +26,21 @@
 			],
 			"Users": [
 				{
+					"path": "/user",
+					"name": "getCurrent"
+				},
+				{
 					"path": "/users",
-					"middleware": ["Auth"]
+					"middleware": [
+						"Auth"
+					]
 				},
 				{
 					"path": "/users/[i:id]",
 					"name": "get",
-					"middleware": ["Auth"]
+					"middleware": [
+						"Auth"
+					]
 				}
 			],
 			"NotFound": [
