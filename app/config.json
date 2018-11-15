@@ -26,14 +26,7 @@
 			],
 			"Users": [
 				{
-					"path": "/user",
-					"name": "getCurrent"
-				},
-				{
-					"path": "/users",
-					"middleware": [
-						"Auth"
-					]
+					"path": "/users"
 				},
 				{
 					"path": "/users/[i:id]",
@@ -52,7 +45,7 @@
 	},
 	"db": {
 		"database_type": "mysql",
-		"database_name": "upoli",
+		"database_name": "crm",
 		"server": "localhost",
 		"username": "root",
 		"password": "qwer1234"

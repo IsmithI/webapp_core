@@ -2,10 +2,10 @@
 
 namespace app\model;
 
+use app\repository\AbstractRepository;
 use \app\utils\DB;
-use \app\model\Users;
 
-class Auth extends Model {
+class Auth {
 
 
 	public static function get(string $session_id) {
@@ -18,8 +18,10 @@ class Auth extends Model {
 			"end_date" => null
 		]);
 		if (!$session) return false;
+
+		$usersRepo = new AbstractRepository("users");
 		
-		$user = Users::one(['id' => $session["user_id"]]);
+		$user = $usersRepo->all()->filter($usersRepo->byId($session["user_id"]));
 		return $user;
 	}
 

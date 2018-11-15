@@ -19,6 +19,14 @@ class AbstractRepository implements Repository {
     private $db;
 
     /**
+     * Model to format record's data to specific types
+     *
+     * @var Model $format
+     */
+    private $format;
+    private $autoFormat = false;
+
+    /**
      * AbstractRepository constructor.
      * @param $table
      */
@@ -33,7 +41,13 @@ class AbstractRepository implements Repository {
         $rawData = $this->db->select($this->getTable(), '*');
 
         $models = new Collection();
-        foreach ($rawData as $data) $models->push(new Model($data));
+        foreach ($rawData as $data) {
+            $model = new Model($data);
+
+            if ($this->isAutoFormat()) $model->format($this->getFormat());
+
+            $models->push($model);
+        }
 
         return $models;
     }
@@ -79,5 +93,41 @@ class AbstractRepository implements Repository {
                 return $model->id == $id;
         };
     }
+
+    /**
+     * @return Model
+     */
+    public function getFormat(): Model
+    {
+        return $this->format ? $this->format : new Model();
+    }
+
+    /**
+     * @param Model $format
+     */
+    public function setFormat(Model $format)
+    {
+        $this->format = $format;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAutoFormat(): bool
+    {
+        return $this->autoFormat;
+    }
+
+    /**
+     * @param bool $autoFormat
+     */
+    public function setAutoFormat(bool $autoFormat)
+    {
+        $this->autoFormat = $autoFormat;
+    }
+
+
+
+
 
 }

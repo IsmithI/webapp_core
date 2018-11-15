@@ -2,13 +2,17 @@
 
 namespace app\model;
 
-class Users extends DBModel {
-
-	public static function nonAttributes() {
-		return ['id', 'deleted', 'role'];
-	}
+class Users extends Model {
 
 	public function getFullName() {
 		return $this->first_name . " " . $this->last_name;
 	}
+
+	public static function getFormat(): Model {
+	    return new Model([
+	        "id" => "int",
+            "deleted" => "bool",
+            "attributes" => "json"
+        ]);
+    }
 }

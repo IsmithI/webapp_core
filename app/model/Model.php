@@ -27,4 +27,24 @@ class Model {
 	public function toArray() {
 		return get_object_vars($this);
 	}
+
+	public function format(Model $format) {
+        foreach ($format as $field => $type) {
+            if (!$this->has($field)) continue;
+
+            switch ($type) {
+                case "int":
+                    $this->$field = (int) $this->$field;
+                    break;
+
+                case "json":
+                    $this->$field = json_decode($this->$field, true);
+                    break;
+
+                case "bool":
+                    $this->$field = $this->$field ? true : false;
+                    break;
+            }
+	    }
+    }
 }
