@@ -2,16 +2,21 @@
 
 namespace app\controller;
 
+use app\repository\AbstractRepository;
+
 class Users {
 
 	static function index($req, $res) {
-		$users = \app\model\Users::all();
+		$usersRepo = new AbstractRepository("users");
+		$users = $usersRepo->all();
 
 		return $res->body($users->toJson());
 	}
 
 	static function get($req, $res) {
-		$user = \app\model\Users::one(['id' => $req->id]);
+        $usersRepo = new AbstractRepository("users");
+		$user = $usersRepo->all()->filter( $usersRepo->byId($req->id) );
+
 		return $res->body($user->toJson());
 	}
 }
