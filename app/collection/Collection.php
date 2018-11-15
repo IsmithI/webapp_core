@@ -57,4 +57,9 @@ class Collection implements \IteratorAggregate {
 
 		return new Collection($filtered);
 	}
+
+	public function pop() {
+	    return $this->items[$this->count()-1];
+    }
+
 }

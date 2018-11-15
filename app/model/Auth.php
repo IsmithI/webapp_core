@@ -3,6 +3,7 @@
 namespace app\model;
 
 use app\repository\AbstractRepository;
+use app\repository\UsersRepository;
 use \app\utils\DB;
 
 class Auth {
@@ -19,9 +20,9 @@ class Auth {
 		]);
 		if (!$session) return false;
 
-		$usersRepo = new AbstractRepository("users");
+		$usersRepo = new UsersRepository();
 		
-		$user = $usersRepo->all()->filter($usersRepo->byId($session["user_id"]));
+		$user = $usersRepo->all()->filter($usersRepo->byId($session["user_id"]))->pop();
 		return $user;
 	}
 

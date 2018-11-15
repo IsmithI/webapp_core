@@ -3,6 +3,7 @@
 namespace app\components;
 
 use \app\model\Auth;
+use app\model\Users;
 
 class CurrentUser {
 
@@ -11,7 +12,7 @@ class CurrentUser {
 	public function __construct() {
 		
 		$this->handler = function ($req, $res, $service, $app) {
-			return Auth::get($service->startSession());;
+			return new Users( (Auth::get($service->startSession()))->toArray() );
 		};
 	}
 

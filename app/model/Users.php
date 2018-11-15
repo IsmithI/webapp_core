@@ -5,7 +5,7 @@ namespace app\model;
 class Users extends Model {
 
 	public function getFullName() {
-		return $this->first_name . " " . $this->last_name;
+		return $this->attributes["first_name"] . " " . $this->attributes["last_name"];
 	}
 
 	public static function getFormat(): Model {
