@@ -2,7 +2,9 @@
 
 namespace app\collection;
 
-class Collection implements \IteratorAggregate {
+use JsonSerializable;
+
+class Collection implements \IteratorAggregate, JsonSerializable {
 
 	protected $items = [];
 
@@ -47,6 +49,7 @@ class Collection implements \IteratorAggregate {
 
 	public function sort(\Closure $comparator) {
 		usort($this->items, $comparator);
+		return $this;
 	}
 
 	public function filter(\Closure $comparator) {
@@ -62,4 +65,25 @@ class Collection implements \IteratorAggregate {
 	    return $this->items[$this->count()-1];
     }
 
+    public function find(\Closure $comparator) {
+        $records = $this->filter($comparator);
+        return $records->pop();
+    }
+
+    public function map(\Closure $closure) {
+	    $result = new Collection();
+	    foreach ($this->items as $key => $item) $result->push($closure($item, $key));
+	    return $result;
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize() {
+        return $this->items;
+    }
 }
