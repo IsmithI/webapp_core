@@ -131,4 +131,18 @@ class CollectionTest extends TestCase {
 			})->get()
 		);
 	}
+
+	/** @test */
+	public function check_that_we_can_find_an_item() {
+        $collection = new \app\collection\Collection([
+            ['username' => 'Alex', 'age' => 20],
+            ['username' => 'Owen', 'age' => 22],
+            ['username' => 'Billy', 'age' => 43],
+            ['username' => 'Freddy', 'age' => 14]
+        ]);
+
+        $item = $collection->find( function ($a) { return $a["username"] == "Alex"; });
+
+        $this->assertEquals($item, ['username' => 'Alex', 'age' => 20]);
+    }
 }
