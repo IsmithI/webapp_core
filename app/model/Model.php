@@ -41,11 +41,29 @@ class Model implements \JsonSerializable {
                     $this->$field = json_decode($this->$field, true);
                     break;
 
+                case "to_json":
+                    $this->$field = json_encode($this->$field);
+                    break;
+
                 case "bool":
                     $this->$field = $this->$field ? true : false;
                     break;
+
+                case "properties":
+                    $data = json_decode($this->$field, true);
+                    foreach ($data as $key => $value)
+                        $this->$key = $value;
+                    unset($this->$field);
+                    break;
+
             }
 	    }
+
+	    if ($format->has("class") && class_exists($format->class)) {
+            return new $format->class($this->toArray());
+        }
+
+	    return $this;
     }
 
     /**

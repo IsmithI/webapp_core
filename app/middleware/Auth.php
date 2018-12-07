@@ -10,7 +10,7 @@ class Auth implements Middleware {
 		$session_id = $service->startSession();
 		$user = \app\model\Auth::get($session_id);		
 
-		if (!$user) return $res->redirect("/login");
+		if (!$user) return new NotAuthenticated($res);
 
 		return false;
 	}

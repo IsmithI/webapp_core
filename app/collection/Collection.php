@@ -54,15 +54,21 @@ class Collection implements \IteratorAggregate, JsonSerializable {
 
 	public function filter(\Closure $comparator) {
 		$filtered = [];
-		foreach ($this->items as $item) {
-			if ($comparator($item)) $filtered[] = $item;
+		foreach ($this->items as $key => $item) {
+			if ($comparator($item, $key)) $filtered[] = $item;
 		}
 
 		return new Collection($filtered);
 	}
 
 	public function pop() {
+	    if ($this->isEmpty()) return null;
+
 	    return $this->items[$this->count()-1];
+    }
+
+    public function isEmpty() {
+	    return $this->count() == 0;
     }
 
     public function find(\Closure $comparator) {
