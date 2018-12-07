@@ -26,12 +26,12 @@ class Auth {
 		return $user;
 	}
 
-	public static function authenticateUser($user, $session_id) {
+	public static function authenticateUser($user) {
 		$db = DB::getInstance();
 
 		$db->insert("sessions", [
 			"user_id" => $user->id,
-			"session_id" => $session_id
+			"session_id" => $user->secret
 		]);
 	}
 

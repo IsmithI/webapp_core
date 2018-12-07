@@ -6,7 +6,7 @@ abstract class AbstractResponse {
 
 	/**
 	 *
-	 * @var Klein\Response
+	 * @var \Klein\Response
 	 */
 	protected $response;
 
