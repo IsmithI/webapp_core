@@ -82,6 +82,16 @@ class Collection implements \IteratorAggregate, JsonSerializable {
 	    return $result;
     }
 
+    public function reduce(\Closure $closure, $initialValue = null) {
+	    $accumulator = !is_null($initialValue) ? $initialValue : $this->get(0);
+
+	    foreach ($this->items as $key => $item) {
+	        $accumulator = $closure($accumulator, $item, $key);
+        }
+
+        return $accumulator;
+    }
+
     /**
      * Specify data which should be serialized to JSON
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php

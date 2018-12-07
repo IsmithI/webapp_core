@@ -131,4 +131,20 @@ class CollectionTest extends TestCase {
 			})->get()
 		);
 	}
+
+	/** @test */
+	public function check_that_we_can_use_reducres_on_collection() {
+        $collection = new \app\collection\Collection([
+            ['username' => 'Alex', 'age' => 20],
+            ['username' => 'Owen', 'age' => 22],
+            ['username' => 'Billy', 'age' => 43],
+            ['username' => 'Freddy', 'age' => 14]
+        ]);
+
+        $summaryAge = $collection->reduce( function ($acc, $user) {
+                return $acc + $user['age'];
+            }, 0);
+
+        $this->assertEquals($summaryAge, 20 + 22 + 43 + 14);
+    }
 }
