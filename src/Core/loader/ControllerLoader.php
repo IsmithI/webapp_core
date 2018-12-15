@@ -39,8 +39,8 @@ class ControllerLoader implements Loader {
 						$controllerModel->middleware = [];
 
 						foreach($route->middleware as $middleware)
-							if (\class_exists($config->middleware."\\$middleware"))
-								$controllerModel->middleware[] = $config->middleware."\\$middleware";
+							if (\class_exists($config->middleware.$middleware))
+								$controllerModel->middleware[] = $config->middleware.$middleware;
 					}
 	
 					$callback($controllerModel);
