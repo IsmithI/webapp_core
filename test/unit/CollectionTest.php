@@ -8,14 +8,14 @@ class CollectionTest extends TestCase {
 	 * @test 
 	 */
 	public function empty_collection_returns_no_items() {
-		$collection = new \smith\core\collection\Collection;
+		$collection = new \Core\collection\Collection;
 
 		$this->assertEmpty($collection->get());
 	}
 
 	/** @test */
 	public function count_is_correct_for_items_passed_in() {
-		$collection = new \smith\core\collection\Collection([
+		$collection = new \Core\collection\Collection([
 			'one', 'two', 'three'
 		]);
 		
@@ -24,7 +24,7 @@ class CollectionTest extends TestCase {
 
 	/** @test */
 	public function items_returned_match_items_passed_in() {
-		$collection = new \smith\core\collection\Collection([
+		$collection = new \Core\collection\Collection([
 			'one', 'two'
 		]);
 
@@ -35,14 +35,14 @@ class CollectionTest extends TestCase {
 
 	/** @test */
 	public function collection_is_instance_of_iterator() {
-		$collection = new \smith\core\collection\Collection;
+		$collection = new \Core\collection\Collection;
 
 		$this->assertInstanceOf(IteratorAggregate::class, $collection);
 	}
 
 	/** @test */
 	public function collection_can_be_ietrated() {
-		$collection = new \smith\core\collection\Collection([
+		$collection = new \Core\collection\Collection([
 			'one', 'two'
 		]);
 
@@ -57,10 +57,10 @@ class CollectionTest extends TestCase {
 
 	/** @test */
 	public function collection_can_be_merged_with_another_collection() {
-		$collection1 = new \smith\core\collection\Collection([
+		$collection1 = new \Core\collection\Collection([
 			'one', 'two'
 		]);
-		$collection2 = new \smith\core\collection\Collection([
+		$collection2 = new \Core\collection\Collection([
 			'three', 'four', 'five'
 		]);
 
@@ -71,7 +71,7 @@ class CollectionTest extends TestCase {
 
 	/** @test */
 	public function can_add_to_existing_collection() {
-		$collection = new \smith\core\collection\Collection([
+		$collection = new \Core\collection\Collection([
 			'one', 'two'
 		]);
 
@@ -83,7 +83,7 @@ class CollectionTest extends TestCase {
 
 	/** @test */
 	public function returns_json_encoded_items() {
-		$collection = new \smith\core\collection\Collection([
+		$collection = new \Core\collection\Collection([
 			['username' => 'Alex'],
 			['username' => 'Billy']
 		]);
@@ -93,7 +93,7 @@ class CollectionTest extends TestCase {
 
 	/** @test */
 	public function we_can_sort_collection_by_some_value() {
-		$collection = new \smith\core\collection\Collection([
+		$collection = new \Core\collection\Collection([
 			['username' => 'Alex'],
 			['username' => 'Owen'],
 			['username' => 'Billy'],
@@ -114,7 +114,7 @@ class CollectionTest extends TestCase {
 
 	/** @test */
 	public function check_collection_can_be_filtered() {
-		$collection = new \smith\core\collection\Collection([
+		$collection = new \Core\collection\Collection([
 			['username' => 'Alex', 'age' => 20],
 			['username' => 'Owen', 'age' => 22],
 			['username' => 'Billy', 'age' => 43],
@@ -134,7 +134,7 @@ class CollectionTest extends TestCase {
 
 	/** @test */
 	public function check_that_we_can_use_reducres_on_collection() {
-        $collection = new \smith\core\collection\Collection([
+        $collection = new \Core\collection\Collection([
             ['username' => 'Alex', 'age' => 20],
             ['username' => 'Owen', 'age' => 22],
             ['username' => 'Billy', 'age' => 43],

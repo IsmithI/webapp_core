@@ -1,7 +1,7 @@
 <?php
 
 use \PHPUnit\Framework\TestCase;
-use smith\core\model\Model;
+use Core\model\Model;
 
 class ModelTest extends TestCase {
 
