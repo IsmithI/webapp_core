@@ -3,19 +3,18 @@
 namespace Core\loader;
 
 use Core\components\Component;
+use Core\ConfigReader;
 
 class ComponentsLoader implements Loader {
 
 	private $config;
 
 	public function __construct() {
-		$this->config = \Core\ConfigReader::read();
+	    $this->config = ConfigReader::main();
     }
 
 	function load( $callback ) {
-		$componentsDir = $this->config["components"]["directory"];
-
-		$Directory = new \RecursiveDirectoryIterator($componentsDir);
+		$Directory = new \RecursiveDirectoryIterator($this->config["directory"]);
 		$Iterator = new \RecursiveIteratorIterator($Directory);
 		$Regex = new \RegexIterator($Iterator, '/^.+\.php$/i', \RecursiveRegexIterator::GET_MATCH);
 

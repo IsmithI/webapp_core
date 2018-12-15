@@ -2,6 +2,7 @@
 
 namespace Core\utils;
 
+use Core\ConfigReader;
 use \Medoo\Medoo;
 
 class DB extends Medoo {
@@ -17,10 +18,10 @@ class DB extends Medoo {
 	public static function getInstance() {
 		if (is_null(self::$instance)) {
             try {
-                $config = \Core\ConfigReader::db();
+                $config = ConfigReader::db();
 
             } catch (\Exception $e) {
-                die();
+                die($e->getMessage());
             }
             self::$instance = new self($config);
 		}

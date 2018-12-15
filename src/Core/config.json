@@ -4,12 +4,14 @@
 	},
 
 	"router": {
+		"controllers": "./controllers",
+		"middleware": "./middleware",
 		"web": {}
 	},
 
 	"db": {},
 
 	"components": {
-		"directory": "app/components"
+		"directory": "./"
 	}
 }

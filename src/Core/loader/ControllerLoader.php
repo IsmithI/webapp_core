@@ -2,6 +2,7 @@
 
 namespace Core\loader;
 
+use Core\ConfigReader;
 use Core\model\Model;
 
 class ControllerLoader implements Loader {
@@ -9,34 +10,41 @@ class ControllerLoader implements Loader {
 	private $config;
 
 	public function __construct() {
-		$this->config = \Core\ConfigReader::read();
-	}
+        try {
+            $this->config = ConfigReader::routes();
+        } catch (\Exception $e) {
+            $this->config = ConfigReader::read()["router"];
+        }
+    }
 
 	public function load( $callback ) {
-		$routes = $this->config["router"];
+		$config = new Model($this->config);
 
-		foreach ($routes["web"] as $controller => $routes) {
-			$controller = \class_exists("\app\controller\\".$controller) ?
-							"\app\controller\\".$controller
+		foreach ($config->web as $controller => $routes) {
+			$controller = \class_exists($config->controllers . $controller) ?
+                            $config->controllers.$controller
 							:
 							false;
 
 			if ($controller) {
-				foreach ($routes as $route) {					
+				foreach ($routes as $route) {
+				    $route = new Model($route);
 					$controllerModel = new Model();
 
-					if (array_key_exists("method", $route))
-						$controllerModel->method = $route["method"];
+					if (!$route->has("path")) continue;
 
-					$controllerModel->path = $route["path"];
-					$controllerModel->name = array_key_exists("name", $route) ? "$controller::".$route["name"] : "$controller::"."index"; 
+					if ($route->has("method"))
+						$controllerModel->method = $route->method;
 
-					if (array_key_exists("middleware", $route)) {
+					$controllerModel->path = $route->path;
+					$controllerModel->name = $route->has("name") ? "$controller::".$route->name : "$controller::"."index";
+
+					if ($route->has("middleware")) {
 						$controllerModel->middleware = [];
 
-						foreach($route["middleware"] as $middleware)
-							if (\class_exists("app\\middleware\\$middleware"))
-								$controllerModel->middleware[] = "app\\middleware\\$middleware";
+						foreach($route->middleware as $middleware)
+							if (\class_exists($config->middleware."\\$middleware"))
+								$controllerModel->middleware[] = $config->middleware."\\$middleware";
 					}
 	
 					$callback($controllerModel);
