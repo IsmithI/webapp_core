@@ -14,6 +14,8 @@ class ComponentsLoader implements Loader {
     }
 
 	function load( $callback ) {
+	    if (!file_exists($this->config["directory"])) return;
+
 		$Directory = new \RecursiveDirectoryIterator($this->config["directory"]);
 		$Iterator = new \RecursiveIteratorIterator($Directory);
 		$Regex = new \RegexIterator($Iterator, '/^.+\.php$/i', \RecursiveRegexIterator::GET_MATCH);

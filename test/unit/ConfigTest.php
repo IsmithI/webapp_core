@@ -16,8 +16,8 @@ class ConfigTest extends \PHPUnit\Framework\TestCase {
     public function check_default_router_config() {
         $config = ConfigReader::routes();
         $this->assertEquals([
-            "controllers" => "./controllers",
-            "middleware" => "./middleware",
+            "controllers" => "controllers\\",
+            "middleware" => "middleware\\",
             "web" => []
         ], $config);
     }
