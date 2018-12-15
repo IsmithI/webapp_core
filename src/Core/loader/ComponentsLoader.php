@@ -10,7 +10,7 @@ class ComponentsLoader implements Loader {
 	private $config;
 
 	public function __construct() {
-	    $this->config = ConfigReader::main();
+	    $this->config = ConfigReader::components();
     }
 
 	function load( $callback ) {

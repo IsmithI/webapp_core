@@ -43,4 +43,11 @@ class ConfigReader {
             :
             json_decode(file_get_contents(self::PATH), true);
     }
+
+    public static function components() {
+        return file_exists(self::ROUTES_CONFIG_PATH) ?
+            json_decode(file_get_contents(self::DB_CONFIG_PATH), true)
+            :
+            json_decode(file_get_contents(self::PATH), true)["components"];
+    }
 }
