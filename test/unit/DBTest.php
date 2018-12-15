@@ -1,7 +1,7 @@
 <?php
 
 use \PHPUnit\Framework\TestCase;
-use \app\utils\DB;
+use smith\core\utils\DB;
 
 class DBTest extends TestCase {
 

@@ -6,8 +6,8 @@
  * Time: 16:24
  */
 
-use app\repository\AbstractRepository;
-use app\collection\Collection;
+use smith\core\repository\AbstractRepository;
+use smith\core\collection\Collection;
 use \PHPUnit\Framework\TestCase;
 
 class AbstractRepositoryTest extends TestCase

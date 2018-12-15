@@ -1,0 +1,15 @@
+{
+	"app": {
+		"name": "DB test"
+	},
+
+	"router": {
+		"web": {}
+	},
+
+	"db": {},
+
+	"components": {
+		"directory": "app/components"
+	}
+}

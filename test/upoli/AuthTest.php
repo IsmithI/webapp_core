@@ -1,8 +1,8 @@
 <?php
 
 use \PHPUnit\Framework\TestCase;
-use \app\model\Auth;
-use \app\model\DBModel;
+use smith\core\model\Auth;
+use smith\core\model\DBModel;
 
 class AuthTest {
 

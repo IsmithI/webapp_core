@@ -4,7 +4,7 @@ header('Access-Control-Allow-Origin: *');
 
 require 'vendor/autoload.php';
 
-use \app\App;
+use smith\core\App;
 
 $app = new App();
 $app->run();
