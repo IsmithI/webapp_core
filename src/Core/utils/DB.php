@@ -16,8 +16,13 @@ class DB extends Medoo {
 
 	public static function getInstance() {
 		if (is_null(self::$instance)) {
-			$config = \Core\ConfigReader::read()["db"];
-			self::$instance = new self($config);
+            try {
+                $config = \Core\ConfigReader::db();
+
+            } catch (\Exception $e) {
+                die();
+            }
+            self::$instance = new self($config);
 		}
 		return self::$instance;
 	}
