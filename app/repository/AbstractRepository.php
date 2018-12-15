@@ -52,6 +52,10 @@ class AbstractRepository implements Repository {
         return $models;
     }
 
+    public function query() {
+        return new QueryBuilder($this);
+    }
+
     /**
      * @param Model $model
      */
@@ -85,13 +89,12 @@ class AbstractRepository implements Repository {
     }
 
 
-    public function byId($id): \Closure {
-        return function ($model) use ($id) {
-            if (is_array($id))
-                return in_array($model->id, $id);
-            else
-                return $model->id == $id;
-        };
+    /**
+     * @param $id
+     * @return Model|bool
+     */
+    public function getById($id) {
+        return $this->query()->where(['id' => $id])->get();
     }
 
     /**
@@ -126,8 +129,13 @@ class AbstractRepository implements Repository {
         $this->autoFormat = $autoFormat;
     }
 
-
-
+    /**
+     * @return DB|null
+     */
+    public function getDb(): ?DB
+    {
+        return $this->db;
+    }
 
 
 }

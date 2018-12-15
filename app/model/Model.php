@@ -55,7 +55,16 @@ class Model implements \JsonSerializable {
                         $this->$key = $value;
                     unset($this->$field);
                     break;
+            }
 
+            if ($type instanceof Model) {
+                if (is_array($this->$field)) {
+                    $this->$field = (new Model($this->$field))->format($type);
+                }
+                elseif (is_string($this->$field)) {
+                    $data = json_decode($this->$field, true);
+                    if (json_last_error() == JSON_ERROR_NONE) $this->$field = (new Model($data))->format($type);
+                }
             }
 	    }
 

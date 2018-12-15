@@ -2,8 +2,11 @@
 
 namespace app\components;
 
-use \app\model\Auth;
+use app\collection\Collection;
+use app\middleware\JWTAuth;
 use app\model\Users;
+use app\repository\UsersRepository;
+use Firebase\JWT\JWT;
 
 class CurrentUser {
 
@@ -12,7 +15,24 @@ class CurrentUser {
 	public function __construct() {
 		
 		$this->handler = function ($req, $res, $service, $app) {
-			return new Users( (Auth::get($service->startSession()))->toArray() );
+            $headers = new Collection($req->headers()->all());
+
+            $token = $headers->get('Token');
+
+            try {
+                $decoded = JWT::decode($token, JWTAuth::KEY, ['HS256']);
+            }
+            catch (\Exception $e) {
+                return false;
+            }
+
+            $repo = new UsersRepository();
+
+            $user = $repo->all()->find(function ($u) use ($decoded) {
+                return $u->id == $decoded->id;
+            });
+
+            return $user;
 		};
 	}
 

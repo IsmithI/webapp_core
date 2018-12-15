@@ -2,26 +2,25 @@
 
 namespace app\controller;
 
+use app\controller\response\Success;
 use app\repository\AbstractRepository;
+use app\repository\UsersRepository;
 
 class Users {
 
 	static function index($req, $res) {
-		$usersRepo = new AbstractRepository("users");
-		$usersRepo->setAutoFormat(true);
-		$usersRepo->setFormat(\app\model\Users::getFormat());
-		$users = $usersRepo->all();
+		$usersRepo = new UsersRepository();
 
-		return $res->body($users->toJson());
+		$users = $usersRepo->query()->retrieve();
+
+		return new Success($res, $users);
 	}
 
 	static function get($req, $res) {
-        $usersRepo = new AbstractRepository("users");
-        $usersRepo->setAutoFormat(true);
-        $usersRepo->setFormat(\app\model\Users::getFormat());
+        $usersRepo = new UsersRepository();
 
-		$user = $usersRepo->all()->filter( $usersRepo->byId($req->id) );
+		$user = $usersRepo->getById($req->id);
 
-		return $res->body($user->toJson());
+		return new Success($res, $user);
 	}
 }
