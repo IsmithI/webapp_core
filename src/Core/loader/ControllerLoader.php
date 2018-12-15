@@ -10,11 +10,7 @@ class ControllerLoader implements Loader {
 	private $config;
 
 	public function __construct() {
-        try {
-            $this->config = ConfigReader::routes();
-        } catch (\Exception $e) {
-            $this->config = ConfigReader::read()["router"];
-        }
+        $this->config = ConfigReader::routes();
     }
 
 	public function load( $callback ) {
