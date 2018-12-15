@@ -1,6 +1,7 @@
 {
 	"name": "php-web",
 	"description": "A hand crafted web framework to make web dev easy as f*ck",
+	"version": "1.0",
 	"autoload": {
 		"psr-4": {
 			"app\\": "app"
