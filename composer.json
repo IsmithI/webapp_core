@@ -1,4 +1,5 @@
 {
+	"name": "smith/core",
 	"description": "A hand crafted web framework to make web dev easy as f*ck",
 	"autoload": {
 		"psr-4": {
