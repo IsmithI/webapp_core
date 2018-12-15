@@ -22,7 +22,8 @@ class Auth {
 
 		$usersRepo = new UsersRepository();
 		
-		$user = $usersRepo->all()->filter($usersRepo->byId($session["user_id"]))->pop();
+		$user = $usersRepo->getById($session["user_id"]);
+
 		return $user;
 	}
 

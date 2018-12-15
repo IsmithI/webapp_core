@@ -19,4 +19,10 @@ abstract class AbstractResponse {
 	public function send() {
 		return $this->response->json($this->getResponseMessage());
 	}
+
+    public function __toString():string {
+        return json_encode($this->getResponseMessage());
+    }
+
+
 }
