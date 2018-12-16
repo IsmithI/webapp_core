@@ -102,4 +102,8 @@ class Collection implements \IteratorAggregate, JsonSerializable {
     public function jsonSerialize() {
         return $this->items;
     }
+
+    public function each($callback) {
+        foreach ($this->items as $key => $item) $callback($item, $key);
+    }
 }

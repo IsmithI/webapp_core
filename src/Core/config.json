@@ -12,6 +12,11 @@
 	"db": {},
 
 	"components": {
-		"directory": "components"
+		"directory": "src"
+	},
+
+	"sockets": {
+		"directory": "src",
+		"namespace": "Core\\sockets\\"
 	}
 }

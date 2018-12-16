@@ -8,6 +8,7 @@ class ConfigReader {
 	public const DB_CONFIG_PATH = "config/database.json";
 	public const ROUTES_CONFIG_PATH = "config/router.json";
 	public const MAIN_CONFIG_PATH = "config/main.json";
+	public const SOCKETS_CONFIG_PATH = "config/sockets.json";
 
 	public static function read() {
 		$config = \json_decode(\file_get_contents(self::PATH), true);
@@ -50,5 +51,13 @@ class ConfigReader {
             json_decode(file_get_contents(self::MAIN_CONFIG_PATH), true)["components"]
             :
             json_decode(file_get_contents(self::PATH), true)["components"];
+    }
+
+    public static function sockets()
+    {
+        return file_exists(self::SOCKETS_CONFIG_PATH) ?
+            json_decode(file_get_contents(self::SOCKETS_CONFIG_PATH), true)
+            :
+            json_decode(file_get_contents(self::PATH), true)["sockets"];
     }
 }
