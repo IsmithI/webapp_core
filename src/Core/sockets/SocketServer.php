@@ -33,7 +33,7 @@ class SocketServer implements MessageComponentInterface, ISocketServer
     private $components;
 
     public static function init() {
-        if (self::$instance == null) self::$instance = new SocketServer();
+        if (self::$instance == null) self::$instance = new (get_called_class())();
 
         echo "Initialized SocketsServer\n";
         self::$instance->start();
