@@ -36,7 +36,7 @@ class SocketsLoader implements Loader {
 
                     $className = $config->namespace . str_replace(".php", "", $file->getFileName());
 
-                    if (class_exists($className) && $className instanceof MessageComponentInterface) {
+                    if (is_a($className, MessageComponentInterface::class, true)) {
                         $model = new $className();
 
                         $callback($model);

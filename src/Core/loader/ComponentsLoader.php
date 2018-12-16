@@ -24,7 +24,7 @@ class ComponentsLoader implements Loader {
 			if ($file->getExtension() == 'php') {
 				$className = str_replace(".php", "", str_replace("/", "\\", $file));
 
-				if (class_exists($className) && $className instanceof Component) {
+				if (is_a($className, Component::class, true)) {
                     $model = new $className();
 
                     $callback($model);
