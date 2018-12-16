@@ -11,6 +11,7 @@ namespace Core\loader;
 
 use Core\ConfigReader;
 use Core\model\Model;
+use Core\sockets\ISocketServer;
 use Ratchet\MessageComponentInterface;
 
 class SocketsLoader implements Loader {
@@ -36,7 +37,9 @@ class SocketsLoader implements Loader {
 
                     $className = $config->namespace . str_replace(".php", "", $file->getFileName());
 
-                    if (is_a($className, MessageComponentInterface::class, true)) {
+                    if (is_a($className, MessageComponentInterface::class, true) &&
+                        !is_a($className, ISocketServer::class, true)) {
+
                         $model = new $className();
 
                         $callback($model);

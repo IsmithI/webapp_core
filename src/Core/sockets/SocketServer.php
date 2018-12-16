@@ -17,7 +17,7 @@ use Ratchet\MessageComponentInterface;
 use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
 
-class SocketServer implements MessageComponentInterface
+class SocketServer implements MessageComponentInterface, ISocketServer
 {
     private static $instance = null;
 
