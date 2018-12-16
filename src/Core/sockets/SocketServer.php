@@ -115,11 +115,13 @@ class SocketServer implements MessageComponentInterface
         $this->components->each( function (MessageComponentInterface $component) use ($from, $msg) {
             $response = $component->onMessage($from, $msg);
 
-            $this->notifyClients($response);
+            $this->notifyClients($from, $response);
         });
     }
 
-    protected function notifyClients($message) {
-        foreach ($this->clients as $client) $client->send($message);
+    protected function notifyClients($from, $message) {
+        foreach ($this->clients as $client)
+            if ($from !== $client)
+                $client->send($message);
     }
 }
