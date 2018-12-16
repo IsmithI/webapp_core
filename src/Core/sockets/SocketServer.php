@@ -65,7 +65,7 @@ class SocketServer implements MessageComponentInterface, ISocketServer
      * @param  ConnectionInterface $conn The socket/connection that just connected to your application
      * @throws \Exception
      */
-    function onOpen(ConnectionInterface $conn)
+    public function onOpen(ConnectionInterface $conn)
     {
         $this->clients->attach($conn);
 
@@ -79,7 +79,7 @@ class SocketServer implements MessageComponentInterface, ISocketServer
      * @param  ConnectionInterface $conn The socket/connection that is closing/closed
      * @throws \Exception
      */
-    function onClose(ConnectionInterface $conn)
+    public function onClose(ConnectionInterface $conn)
     {
         $this->clients->detach($conn);
 
@@ -95,7 +95,7 @@ class SocketServer implements MessageComponentInterface, ISocketServer
      * @param  \Exception $e
      * @throws \Exception
      */
-    function onError(ConnectionInterface $conn, \Exception $e)
+    public function onError(ConnectionInterface $conn, \Exception $e)
     {
         $this->components->each( function (MessageComponentInterface $component) use ($conn, $e) {
             $component->onError($conn, $e);
@@ -110,7 +110,7 @@ class SocketServer implements MessageComponentInterface, ISocketServer
      * @param  string $msg The message received
      * @throws \Exception
      */
-    function onMessage(ConnectionInterface $from, $msg)
+    public function onMessage(ConnectionInterface $from, $msg)
     {
         $this->components->each( function (MessageComponentInterface $component) use ($from, $msg) {
             $response = $component->onMessage($from, $msg);
@@ -124,4 +124,22 @@ class SocketServer implements MessageComponentInterface, ISocketServer
             if ($from !== $client)
                 $client->send($message);
     }
+
+    /**
+     * @return \SplObjectStorage
+     */
+    public function getClients(): \SplObjectStorage
+    {
+        return $this->clients;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getComponents(): Collection
+    {
+        return $this->components;
+    }
+
+
 }
