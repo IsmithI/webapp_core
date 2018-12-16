@@ -39,7 +39,7 @@ class SocketServer implements MessageComponentInterface
         self::$instance->start();
     }
 
-    private function __construct() {
+    protected function __construct() {
         $this->clients = new \SplObjectStorage();
         $this->components = new Collection();
     }
