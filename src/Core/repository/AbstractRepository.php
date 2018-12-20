@@ -61,10 +61,15 @@ class AbstractRepository implements Repository {
      */
     public function save(Model $model)
     {
-        if (!$model->has("id"))
-            $this->db->insert($this->getTable(), $model->toArray());
+        $newModel = $this->formatToSave($model);
+        if (!$newModel->has("id")) {
+            $this->db->insert($this->getTable(), $newModel->toArray());
+            $newModel->id = (int) $this->db->id();
+
+            $model->id = $newModel->id;
+        }
         else
-            $this->db->update($this->getTable(), $model->toArray(), ["id" => $model->id]);
+            $this->db->update($this->getTable(), $newModel->toArray(), ["id" => $newModel->id]);
     }
 
     public function delete($id)
@@ -137,5 +142,14 @@ class AbstractRepository implements Repository {
         return $this->db;
     }
 
+    public function formatToSave(Model $model) {
+        return (new Model($model->toArray()))->format($this->getDBFormat());
+    }
+
+    public function getDBFormat(): Model {
+        return new Model([
+            "attributes" => "to_json"
+        ]);
+    }
 
 }
