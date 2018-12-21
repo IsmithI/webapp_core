@@ -10,9 +10,10 @@ class Users extends Model {
 
 	public static function getFormat(): Model {
 	    return new Model([
+	        "class" => Users::class,
 	        "id" => "int",
             "deleted" => "bool",
-            "attributes" => "json"
+            "attributes" => new Model()
         ]);
     }
 }

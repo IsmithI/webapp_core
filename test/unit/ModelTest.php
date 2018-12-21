@@ -49,4 +49,28 @@ class ModelTest extends TestCase {
 		$this->assertEquals($newArray['last_name'], $model->last_name);
 	}
 
+	/** @test */
+	public function model_can_be_formatted_to_given_format() {
+	    $model = new Model([
+	        "id" => "2",
+            "deleted" => 0,
+            "attributes" => [
+                "first_name" => "Oleg",
+                "last_name" => "Bondar"
+            ]
+        ]);
+
+	    $format = new Model([
+	        "class" => \Core\model\Users::class,
+	        "id" => "int",
+            "deleted" => "bool",
+            "attributes" => new Model()
+        ]);
+
+	    $user = $model->format($format);
+
+	    $this->assertInstanceOf(\Core\model\Users::class, $user);
+	    $this->assertInstanceOf(Model::class, $user->attributes);
+	    $this->assertEquals($user->id, 2);
+    }
 }
