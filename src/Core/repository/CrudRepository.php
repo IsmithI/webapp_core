@@ -13,7 +13,7 @@ use Core\collection\Collection;
 use Core\model\Model;
 use Core\utils\DB;
 
-class CrudRepository implements Repository {
+class AbstractRepository implements Repository {
 
     private $table;
     private $db;
