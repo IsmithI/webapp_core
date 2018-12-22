@@ -13,29 +13,7 @@ use Core\collection\Collection;
 use Core\model\Model;
 use Core\utils\DB;
 
-class AbstractRepository implements Repository {
-
-    private $table;
-    private $db;
-
-    /**
-     * Model to format record's data to specific types
-     *
-     * @var Model $format
-     */
-    private $format;
-    private $autoFormat = false;
-
-    /**
-     * AbstractRepository constructor.
-     * @param $table
-     */
-    public function __construct($table)
-    {
-        $this->table = $table;
-        $this->db = DB::getInstance();
-    }
-
+class CrudRepository extends AbstractRepository {
 
     public function all(): Collection {
         $rawData = $this->db->select($this->getTable(), '*');
@@ -50,10 +28,6 @@ class AbstractRepository implements Repository {
         }
 
         return $models;
-    }
-
-    public function query() {
-        return new QueryBuilder($this);
     }
 
     /**
@@ -76,80 +50,4 @@ class AbstractRepository implements Repository {
     {
         $this->db->delete($this->getTable(), ['id' => $id]);
     }
-
-    /**
-     * @return mixed
-     */
-    public function getTable()
-    {
-        return $this->table;
-    }
-
-    /**
-     * @param mixed $table
-     */
-    public function setTable($table)
-    {
-        $this->table = $table;
-    }
-
-
-    /**
-     * @param $id
-     * @return Model|bool
-     */
-    public function getById($id) {
-        return $this->query()->where(['id' => $id])->get();
-    }
-
-    /**
-     * @return Model
-     */
-    public function getFormat(): Model
-    {
-        return $this->format ? $this->format : new Model();
-    }
-
-    /**
-     * @param Model $format
-     */
-    public function setFormat(Model $format)
-    {
-        $this->format = $format;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAutoFormat(): bool
-    {
-        return $this->autoFormat;
-    }
-
-    /**
-     * @param bool $autoFormat
-     */
-    public function setAutoFormat(bool $autoFormat)
-    {
-        $this->autoFormat = $autoFormat;
-    }
-
-    /**
-     * @return DB|null
-     */
-    public function getDb(): ?DB
-    {
-        return $this->db;
-    }
-
-    public function formatToSave(Model $model) {
-        return (new Model($model->toArray()))->format($this->getDBFormat());
-    }
-
-    public function getDBFormat(): Model {
-        return new Model([
-            "attributes" => "to_json"
-        ]);
-    }
-
 }

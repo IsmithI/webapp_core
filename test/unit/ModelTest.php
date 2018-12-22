@@ -61,7 +61,7 @@ class ModelTest extends TestCase {
         ]);
 
 	    $format = new Model([
-	        "class" => \Core\model\Users::class,
+	        "class" => SampleClass::class,
 	        "id" => "int",
             "deleted" => "bool",
             "attributes" => new Model()
@@ -69,8 +69,10 @@ class ModelTest extends TestCase {
 
 	    $user = $model->format($format);
 
-	    $this->assertInstanceOf(\Core\model\Users::class, $user);
+	    $this->assertInstanceOf(SampleClass::class, $user);
 	    $this->assertInstanceOf(Model::class, $user->attributes);
 	    $this->assertEquals($user->id, 2);
     }
 }
+
+class SampleClass extends Model {}

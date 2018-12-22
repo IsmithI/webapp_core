@@ -13,18 +13,18 @@ use Core\collection\Collection;
 use Core\model\Model;
 use Core\utils\DB;
 
-class CrudRepository implements Repository {
+abstract class AbstractRepository implements Repository {
 
-    private $table;
-    private $db;
+    protected $table;
+    protected $db;
 
     /**
      * Model to format record's data to specific types
      *
      * @var Model $format
      */
-    private $format;
-    private $autoFormat = false;
+    protected $format;
+    protected $autoFormat = false;
 
     /**
      * AbstractRepository constructor.
@@ -37,20 +37,7 @@ class CrudRepository implements Repository {
     }
 
 
-    public function all(): Collection {
-        $rawData = $this->db->select($this->getTable(), '*');
-
-        $models = new Collection();
-        foreach ($rawData as $data) {
-            $model = new Model($data);
-
-            if ($this->isAutoFormat()) $model->format($this->getFormat());
-
-            $models->push($model);
-        }
-
-        return $models;
-    }
+    public abstract function all(): Collection;
 
     public function query() {
         return new QueryBuilder($this);
@@ -59,23 +46,9 @@ class CrudRepository implements Repository {
     /**
      * @param Model $model
      */
-    public function save(Model $model)
-    {
-        $newModel = $this->formatToSave($model);
-        if (!$newModel->has("id")) {
-            $this->db->insert($this->getTable(), $newModel->toArray());
-            $newModel->id = (int) $this->db->id();
+    public abstract function save(Model $model);
 
-            $model->id = $newModel->id;
-        }
-        else
-            $this->db->update($this->getTable(), $newModel->toArray(), ["id" => $newModel->id]);
-    }
-
-    public function delete($id)
-    {
-        $this->db->delete($this->getTable(), ['id' => $id]);
-    }
+    public abstract function delete($id);
 
     /**
      * @return mixed
