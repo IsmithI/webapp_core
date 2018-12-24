@@ -15,10 +15,10 @@ class DB extends Medoo {
 		$this->config = $options;
 	}
 
-	public static function getInstance() {
+	public static function getInstance($config = null) {
 		if (is_null(self::$instance)) {
             try {
-                $config = ConfigReader::db();
+                $config = $config ? $config : ConfigReader::db();
 
             } catch (\Exception $e) {
                 die($e->getMessage());

@@ -11,6 +11,7 @@ namespace Core\repository;
 
 use Core\collection\Collection;
 use Core\model\Model;
+use Core\utils\DB;
 
 class QueryBuilder {
 
@@ -22,12 +23,15 @@ class QueryBuilder {
     private $fields = '*';
     private $where = [];
 
+    private $relatedRepositories;
+
     /**
      * QueryBuilder constructor.
      * @param AbstractRepository $repository
      */
     public function __construct(AbstractRepository $repository) {
         $this->repository = $repository;
+        $this->relatedRepositories = new Model();
     }
 
     public function fields($fields) {
@@ -63,10 +67,19 @@ class QueryBuilder {
 
             if ($this->repository->isAutoFormat()) $model = $model->format($this->repository->getFormat());
 
+            $this->injectTo($model);
+
             $records->push($model);
         }
 
         return $records;
+    }
+
+    public function inject(AbstractRepository $repository) {
+        $key = $repository->getTable();
+        $this->relatedRepositories->$key = $repository;
+
+        return $this;
     }
 
     /**
@@ -85,6 +98,28 @@ class QueryBuilder {
 
         if ($this->repository->isAutoFormat()) $model = $model->format($this->repository->getFormat());
 
+        $this->injectTo($model);
+
         return $model;
+    }
+
+    private function injectTo(Model $model) {
+        foreach ($this->relatedRepositories as $table => $repository) {
+            $relationTable = $this->repository->getTable() . "_" . $table;
+
+            $relations = DB::getInstance()->select($relationTable, [
+                $table . "_id"
+            ], [
+                $this->repository->getTable() . "_id" => $model->id
+            ]);
+
+            $ids = [];
+            foreach ($relations as $relation)
+                $ids[] = $relation[$repository->getTable() . "_id"];
+
+            $records = $repository->query()->where(["id" => $ids])->retrieve();
+
+            $model->$table = $records;
+        }
     }
 }
